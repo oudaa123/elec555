@@ -87,32 +87,30 @@ button {
     25%, 75% { opacity: 0; }
 }
 
-/* زر الفاتورة العائم */
-#floating-invoice {
+/* الأزرار الثابتة */
+.fixed-btn {
     position: fixed;
     bottom: 20px;
-    left: 20px;
-    background-color:#2196F3;
-    color:white;
-    padding:15px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    z-index: 1000;
-}
-
-/* زر تواصل معنا العائم */
-#contact-us {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #25d366;
-    color: white;
     padding: 15px 20px;
     border-radius: 10px;
+    color: white;
+    font-weight: bold;
     cursor: pointer;
     box-shadow: 0 2px 5px rgba(0,0,0,0.3);
     z-index: 1000;
+    text-align: center;
+}
+
+/* زر الفاتورة على اليسار */
+#floating-invoice {
+    left: 20px;
+    background-color: #2196F3;
+}
+
+/* زر تواصل معنا على اليمين */
+#contact-us {
+    right: 20px;
+    background-color: #25d366;
 }
 </style>
 </head>
@@ -137,7 +135,6 @@ button {
 const correctPassword = "7777";
 let cart = [];
 
-// المنتجات
 const products = [
     { name: "سماعة الوان", image: "samaa_alwan.jpg", price: 11, new: true },
     { name: "سماعة ايفون", image: "samaa_iphone.jpg", price: 65, new: true },
@@ -186,9 +183,11 @@ function orderNow(index){
     if(pwd === correctPassword){
         msg += `\nالسعر: ${products[index].price} جنيه`;
     }
-    const phone = "201022495795"; 
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
+    const phone = prompt("ادخل رقم واتساب للتواصل:", "01022495795"); 
+    if(phone){
+        const url = `https://wa.me/20${phone.replace(/^0/,"")}?text=${encodeURIComponent(msg)}`;
+        window.open(url, "_blank");
+    }
 }
 
 function addToCart(index){
@@ -217,23 +216,26 @@ function sendCart(){
         }
         msg += "\n";
     });
-    const phone = "201022495795"; 
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
+    const phone = prompt("ادخل رقم واتساب لإرسال الفاتورة:", "01022495795");
+    if(phone){
+        const url = `https://wa.me/20${phone.replace(/^0/,"")}?text=${encodeURIComponent(msg)}`;
+        window.open(url, "_blank");
+    }
     cart = [];
 }
 
-// زر تواصل معنا
 function contactUs(){
-    const phone = "201022495795";
-    const url = `https://wa.me/${phone}`;
-    window.open(url, "_blank");
+    const phone = prompt("ادخل رقم واتساب للتواصل:", "01022495795");
+    if(phone){
+        const url = `https://wa.me/20${phone.replace(/^0/,"")}`;
+        window.open(url, "_blank");
+    }
 }
 </script>
 
-<!-- الأزرار العائمة -->
-<div id="floating-invoice" onclick="sendCart()">الفاتورة الخاصة بك</div>
-<div id="contact-us" onclick="contactUs()">تواصل معنا</div>
+<!-- الأزرار الثابتة -->
+<div id="floating-invoice" class="fixed-btn" onclick="sendCart()">الفاتورة الخاصة بك</div>
+<div id="contact-us" class="fixed-btn" onclick="contactUs()">تواصل معنا</div>
 
 </body>
 </html>
