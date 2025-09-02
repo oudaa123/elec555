@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مملكة الأصليات – المحل: جنه 456465– المهندس محمود أبو كشك</title>
+<title>مملكة الأصليات – المحل: جنه – المهندس محمود أبو كشك</title>
 <style>
 body {
     font-family: Tahoma, sans-serif;
@@ -23,13 +23,22 @@ body {
     display: inline-block;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+.category {
+    margin: 40px 0 10px 0;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 2px solid #25d366;
+    display: inline-block;
+    padding-bottom: 5px;
+}
 .product {
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 15px;
-    margin: 15px auto;
-    width: 300px;
+    margin: 15px;
+    width: 200px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     display: inline-block;
     vertical-align: top;
@@ -41,7 +50,7 @@ body {
     margin: 0 auto 10px auto;
 }
 .name {
-    font-size: 18px;
+    font-size: 16px;
     margin: 5px 0;
     color: #333;
 }
@@ -51,7 +60,7 @@ body {
     margin: 10px 0;
 }
 button {
-    padding: 8px 12px;
+    padding: 6px 10px;
     margin: 5px;
     border-radius: 5px;
     border: none;
@@ -75,6 +84,11 @@ button {
 #password-container {
     margin: 20px 0;
 }
+hr.fancy {
+    border: none;
+    border-top: 2px dashed #25d366;
+    margin: 40px 0;
+}
 </style>
 </head>
 <body>
@@ -83,64 +97,77 @@ button {
 🌟 مملكة الأصليات – المحل: جنه – المهندس محمود أبو كشك 🌟
 </div>
 
-<h2>المنتجات الجديدة</h2>
-<div id="new-products"></div>
-
-<hr style="margin:30px 0; border:1px dashed #ccc;">
-
-<h2>المنتجات العادية</h2>
-<div id="all-products"></div>
-
 <div id="password-container">
     <input type="password" id="password" placeholder="ادخل الباسورد 🔥">
     <button onclick="showPrices()">اعرض الأسعار</button>
 </div>
 
+<div id="products-container"></div>
+
 <script>
-// الباسورد لعرض الأسعار
+// الباسورد
 const correctPassword = "7777";
 
-// المنتجات: الاسم بالعربي + اسم الصورة بالإنجليزي + السعر
+// المنتجات: الاسم بالعربي + اسم الصورة بالإنجليزي + السعر + الفئة + جديد
 const products = [
-    { name: "سماعة الوان", image: "samaa_alwan.jpg", price: 11, new: true },
-    { name: "سماعة ايفون", image: "samaa_iphone.jpg", price: 65, new: true },
-    { name: "سماعة بلو 21", image: "samaa_blue21.jpg", price: 35, new: true },
-    { name: "سماعة سامسونج", image: "samaa_samsung.jpg", price: 35, new: false },
-    { name: "شاحن التر 02 تايب سي", image: "charger_02.jpg", price: 65, new: false },
-    { name: "شاحن واو تايب سي", image: "charger_wao.jpg", price: 28, new: false },
-    { name: "كابل الك 31", image: "cable_k31.jpg", price: 40, new: false },
-    { name: "كابل دليفن تايب سي", image: "cable_delven_typc.jpg", price: 11, new: false }
+    // سماعات
+    { name: "سماعة الوان", image: "samaa_alwan.jpg", price: 11, category:"سماعات", new:true },
+    { name: "سماعة ايفون", image: "samaa_iphone.jpg", price: 65, category:"سماعات", new:true },
+    { name: "سماعة بلو 21", image: "samaa_blue21.jpg", price: 35, category:"سماعات", new:false },
+    { name: "سماعة سامسونج", image: "samaa_samsung.jpg", price: 35, category:"سماعات", new:false },
+
+    // شواحن
+    { name: "شاحن التر 02 تايب سي", image: "charger_02.jpg", price: 65, category:"شواحن", new:false },
+    { name: "شاحن واو تايب سي", image: "charger_wao.jpg", price: 28, category:"شواحن", new:false },
+
+    // كابلات
+    { name: "كابل الك 31", image: "cable_k31.jpg", price: 40, category:"كابلات", new:false },
+    { name: "كابل دليفن تايب سي", image: "cable_delven_typc.jpg", price: 11, category:"كابلات", new:false }
 ];
 
-// السلة
 let cart = [];
 
-// عرض المنتجات
+// عرض المنتجات حسب الفئة
 function displayProducts() {
-    const newContainer = document.getElementById("new-products");
-    const allContainer = document.getElementById("all-products");
+    const container = document.getElementById("products-container");
+    container.innerHTML = "";
 
-    products.forEach((product, index) => {
-        const productHTML = `
-            <div class="product">
-                ${product.new ? '<span class="new-label">منتج جديد</span>' : ''}
-                <img src="${product.image}" alt="${product.name}">
-                <div class="name">${product.name}</div>
-                <div class="price" id="price-${index}">ادخل الباسورد لعرض السعر</div>
-                <button class="order-btn" onclick="orderNow(${index})">اطلب الآن</button>
-                <button class="cart-btn" onclick="addToCart(${index})">أضف إلى السلة</button>
-            </div>
-        `;
-        if(product.new) newContainer.innerHTML += productHTML;
-        else allContainer.innerHTML += productHTML;
+    // احصل على قائمة الفئات بدون تكرار
+    const categories = [...new Set(products.map(p => p.category))];
+
+    categories.forEach(cat => {
+        // عنوان الفئة
+        container.innerHTML += `<div class="category">${cat}</div>`;
+
+        // منتجات الفئة
+        const catProducts = products.filter(p => p.category === cat);
+
+        // عرض المنتجات الجديدة أولاً
+        catProducts.sort((a,b) => b.new - a.new);
+
+        catProducts.forEach((product, index) => {
+            const productHTML = `
+                <div class="product">
+                    ${product.new ? '<span class="new-label">منتج جديد</span>' : ''}
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="name">${product.name}</div>
+                    <div class="price" id="price-${cat}-${index}">ادخل الباسورد لعرض السعر</div>
+                    <button class="order-btn" onclick="orderNow('${cat}',${index})">اطلب الآن</button>
+                    <button class="cart-btn" onclick="addToCart('${cat}',${index})">أضف إلى السلة</button>
+                </div>
+            `;
+            container.innerHTML += productHTML;
+        });
+
+        container.innerHTML += '<hr class="fancy">';
     });
 }
 
-// عرض الأسعار عند إدخال الباسورد
+// عرض الأسعار
 function showPrices(){
     const pwd = document.getElementById("password").value;
     products.forEach((product, index) => {
-        const priceDiv = document.getElementById("price-"+index);
+        const priceDiv = document.getElementById(`price-${product.category}-${index}`);
         if(pwd === correctPassword){
             priceDiv.innerText = `${product.price} جنيه`;
         } else {
@@ -150,51 +177,48 @@ function showPrices(){
 }
 
 // اطلب الآن
-function orderNow(index){
+function orderNow(cat,index){
     const pwd = document.getElementById("password").value;
-    let msg = `المنتج: ${products[index].name}`;
+    const product = products.filter(p => p.category===cat)[index];
+    let msg = `المنتج: ${product.name}`;
     if(pwd === correctPassword){
-        msg += `\nالسعر: ${products[index].price} جنيه`;
+        msg += `\nالسعر: ${product.price} جنيه`;
     }
-    const phone = "201022497595"; // الرقم الصحيح للواتس
+    const phone = "201022497595"; // الرقم الصحيح
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
+    window.open(url,"_blank");
 }
 
 // أضف إلى السلة
-function addToCart(index){
-    let item = cart.find(i => i.index === index);
-    if(item){
-        item.qty += 1;
-    } else {
-        cart.push({index: index, name: products[index].name, price: products[index].price, qty:1});
-    }
+function addToCart(cat,index){
+    const product = products.filter(p => p.category===cat)[index];
+    let item = cart.find(i => i.name === product.name);
+    if(item) item.qty +=1;
+    else cart.push({name:product.name, price: product.price, qty:1});
     alert("تم إضافة المنتج إلى السلة");
 }
 
-// أرسل السلة كاملة
+// إرسال السلة
 function sendCart(){
-    if(cart.length === 0){
+    if(cart.length===0){
         alert("السلة فارغة!");
         return;
     }
     const pwd = document.getElementById("password").value;
     let msg = "فاتورة المنتجات:\n";
-    cart.forEach(item => {
+    cart.forEach(item=>{
         msg += `${item.name} x${item.qty}`;
-        if(pwd === correctPassword){
-            msg += ` - ${item.price * item.qty} جنيه`;
-        }
-        msg += "\n";
+        if(pwd===correctPassword) msg += ` - ${item.price * item.qty} جنيه`;
+        msg+="\n";
     });
-    const phone = "201022497595"; // الرقم الصحيح للواتس
+    const phone = "201022497595"; // الرقم الصحيح
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
-    cart = [];
+    window.open(url,"_blank");
+    cart=[];
 }
 
-// تحميل الصفحة مرة واحدة عند وجود تحديث (يمكن التحكم بالـ version)
-const currentVersion = "1.0"; // غير الرقم عند تعديل الكود
+// التحديث التلقائي مرة واحدة عند وجود نسخة جديدة
+const currentVersion = "1.0";
 const savedVersion = localStorage.getItem("siteVersion");
 if(savedVersion !== currentVersion){
     localStorage.setItem("siteVersion", currentVersion);
