@@ -5,90 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مملكة الأصليات – المحل: جنه – المهندس محمود أبو كشك</title>
 <style>
-body {
-    font-family: Tahoma, sans-serif;
-    background-color: #f9f9f9;
-    text-align: center;
-    margin: 0;
-    padding: 20px;
-}
-.logo {
-    background: #25d366;
-    color: white;
-    font-size: 22px;
-    font-weight: bold;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    display: inline-block;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-.category {
-    margin: 40px 0 10px 0;
-    font-size: 22px;
-    font-weight: bold;
-    color: #333;
-    border-bottom: 2px solid #25d366;
-    display: inline-block;
-    padding-bottom: 5px;
-}
-.product {
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 15px;
-    width: 200px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    display: inline-block;
-    vertical-align: top;
-}
-.product img {
-    width: 100%;
-    border-radius: 5px;
-    display: block;
-    margin: 0 auto 10px auto;
-}
-.name {
-    font-size: 16px;
-    margin: 5px 0;
-    color: #333;
-}
-.price {
-    font-size: 16px;
-    color: #e91e63;
-    margin: 10px 0;
-}
-button {
-    padding: 6px 10px;
-    margin: 5px;
-    border-radius: 5px;
-    border: none;
-    font-size: 14px;
-    cursor: pointer;
-}
-.order-btn {
-    background-color: #25d366;
-    color: white;
-}
-.cart-btn {
-    background-color: #ff5722;
-    color: white;
-}
-.new-label {
-    color: red;
-    font-weight: bold;
-    display: block;
-    margin-bottom: 5px;
-}
-#password-container {
-    margin: 20px 0;
-}
-hr.fancy {
-    border: none;
-    border-top: 2px dashed #25d366;
-    margin: 40px 0;
-}
+body { font-family: Tahoma,sans-serif; background:#f9f9f9; text-align:center; margin:0; padding:20px; }
+.logo { background:#25d366; color:#fff; font-size:22px; font-weight:bold; padding:15px; border-radius:10px; margin-bottom:20px; display:inline-block; box-shadow:0 2px 5px rgba(0,0,0,0.2); }
+.category { margin:40px 0 10px 0; font-size:22px; font-weight:bold; color:#333; border-bottom:2px solid #25d366; display:inline-block; padding-bottom:5px; }
+.products-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:15px; }
+.product { background:#fff; border:1px solid #ccc; border-radius:8px; padding:15px; width:180px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+.product img { width:100%; border-radius:5px; display:block; margin-bottom:10px; }
+.name { font-size:16px; margin:5px 0; color:#333; }
+.price { font-size:16px; color:#e91e63; margin:10px 0; }
+button { padding:6px 10px; margin:3px; border-radius:5px; border:none; font-size:14px; cursor:pointer; }
+.order-btn { background-color:#25d366; color:white; }
+.cart-btn { background-color:#ff5722; color:white; }
+.new-label { color:red; font-weight:bold; display:block; margin-bottom:5px; }
+#password-container { margin:20px 0; }
+hr.fancy { border:none; border-top:2px dashed #25d366; margin:40px 0; }
+.quantity { width:50px; }
+#contact-buttons { margin:20px 0; display:none; }
 </style>
 </head>
 <body>
@@ -102,131 +34,122 @@ hr.fancy {
     <button onclick="showPrices()">اعرض الأسعار</button>
 </div>
 
+<button onclick="toggleContact()">تواصل معنا</button>
+<div id="contact-buttons">
+    <button onclick="openWhatsApp('01022495795')">المحل 01022495795</button>
+    <button onclick="openWhatsApp('01067070423')">المحل 01067070423</button>
+    <button onclick="openWhatsApp('01096005334')">السيارة 01096005334</button>
+</div>
+
 <div id="products-container"></div>
 
-<script>
-// الباسورد
-const correctPassword = "7777";
+<button onclick="showInvoice()">الفاتورة الخاصة بك</button>
 
-// المنتجات: الاسم بالعربي + اسم الصورة بالإنجليزي + السعر + الفئة + جديد
+<script>
+const correctPassword = "7777";
 const products = [
-    // سماعات
     { name: "سماعة الوان", image: "samaa_alwan.jpg", price: 11, category:"سماعات", new:true },
     { name: "سماعة ايفون", image: "samaa_iphone.jpg", price: 65, category:"سماعات", new:true },
     { name: "سماعة بلو 21", image: "samaa_blue21.jpg", price: 35, category:"سماعات", new:false },
     { name: "سماعة سامسونج", image: "samaa_samsung.jpg", price: 35, category:"سماعات", new:false },
-
-    // شواحن
     { name: "شاحن التر 02 تايب سي", image: "charger_02.jpg", price: 65, category:"شواحن", new:false },
     { name: "شاحن واو تايب سي", image: "charger_wao.jpg", price: 28, category:"شواحن", new:false },
-
-    // كابلات
     { name: "كابل الك 31", image: "cable_k31.jpg", price: 40, category:"كابلات", new:false },
     { name: "كابل دليفن تايب سي", image: "cable_delven_typc.jpg", price: 11, category:"كابلات", new:false }
 ];
 
 let cart = [];
 
-// عرض المنتجات حسب الفئة
-function displayProducts() {
+function displayProducts(){
     const container = document.getElementById("products-container");
-    container.innerHTML = "";
+    container.innerHTML="";
+    const categories = [...new Set(products.map(p=>p.category))];
 
-    // احصل على قائمة الفئات بدون تكرار
-    const categories = [...new Set(products.map(p => p.category))];
-
-    categories.forEach(cat => {
-        // عنوان الفئة
-        container.innerHTML += `<div class="category">${cat}</div>`;
-
-        // منتجات الفئة
-        const catProducts = products.filter(p => p.category === cat);
-
-        // عرض المنتجات الجديدة أولاً
-        catProducts.sort((a,b) => b.new - a.new);
-
-        catProducts.forEach((product, index) => {
-            const productHTML = `
-                <div class="product">
-                    ${product.new ? '<span class="new-label">منتج جديد</span>' : ''}
-                    <img src="${product.image}" alt="${product.name}">
-                    <div class="name">${product.name}</div>
-                    <div class="price" id="price-${cat}-${index}">ادخل الباسورد لعرض السعر</div>
-                    <button class="order-btn" onclick="orderNow('${cat}',${index})">اطلب الآن</button>
-                    <button class="cart-btn" onclick="addToCart('${cat}',${index})">أضف إلى السلة</button>
-                </div>
+    categories.forEach(cat=>{
+        container.innerHTML+=`<div class="category">${cat}</div>`;
+        container.innerHTML+=`<div class="products-grid">`;
+        const catProducts = products.filter(p=>p.category===cat);
+        catProducts.sort((a,b)=>b.new - a.new);
+        catProducts.forEach((product,index)=>{
+            container.innerHTML+=`
+            <div class="product">
+                ${product.new?'<span class="new-label">منتج جديد</span>':''}
+                <img src="${product.image}" alt="${product.name}">
+                <div class="name">${product.name}</div>
+                <div class="price" id="price-${cat}-${index}">ادخل الباسورد لعرض السعر</div>
+                <input type="number" id="qty-${cat}-${index}" class="quantity" value="1" min="1">
+                <button class="order-btn" onclick="orderNow('${cat}',${index})">اطلب الآن</button>
+                <button class="cart-btn" onclick="addToCart('${cat}',${index})">أضف إلى السلة</button>
+            </div>
             `;
-            container.innerHTML += productHTML;
         });
-
-        container.innerHTML += '<hr class="fancy">';
+        container.innerHTML+="</div>";
+        container.innerHTML+='<hr class="fancy">';
     });
 }
 
-// عرض الأسعار
 function showPrices(){
     const pwd = document.getElementById("password").value;
-    products.forEach((product, index) => {
+    products.forEach((product,index)=>{
         const priceDiv = document.getElementById(`price-${product.category}-${index}`);
-        if(pwd === correctPassword){
-            priceDiv.innerText = `${product.price} جنيه`;
-        } else {
-            priceDiv.innerText = "ادخل الباسورد لعرض السعر";
-        }
+        if(pwd === correctPassword) priceDiv.innerText = `${product.price} جنيه`;
+        else priceDiv.innerText = "ادخل الباسورد لعرض السعر";
     });
 }
 
-// اطلب الآن
 function orderNow(cat,index){
     const pwd = document.getElementById("password").value;
-    const product = products.filter(p => p.category===cat)[index];
+    const product = products.filter(p=>p.category===cat)[index];
     let msg = `المنتج: ${product.name}`;
-    if(pwd === correctPassword){
-        msg += `\nالسعر: ${product.price} جنيه`;
-    }
-    const phone = "201022497595"; // الرقم الصحيح
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-    window.open(url,"_blank");
+    if(pwd===correctPassword) msg+=`\nالسعر: ${product.price} جنيه`;
+    openWhatsApp("01022495795", msg);
 }
 
-// أضف إلى السلة
 function addToCart(cat,index){
-    const product = products.filter(p => p.category===cat)[index];
-    let item = cart.find(i => i.name === product.name);
-    if(item) item.qty +=1;
-    else cart.push({name:product.name, price: product.price, qty:1});
+    const product = products.filter(p=>p.category===cat)[index];
+    const qty = parseInt(document.getElementById(`qty-${cat}-${index}`).value);
+    let item = cart.find(i=>i.name===product.name);
+    if(item) item.qty += qty;
+    else cart.push({name:product.name, price:product.price, qty});
     alert("تم إضافة المنتج إلى السلة");
 }
 
-// إرسال السلة
-function sendCart(){
+function showInvoice(){
     if(cart.length===0){
         alert("السلة فارغة!");
         return;
     }
-    const pwd = document.getElementById("password").value;
-    let msg = "فاتورة المنتجات:\n";
-    cart.forEach(item=>{
-        msg += `${item.name} x${item.qty}`;
-        if(pwd===correctPassword) msg += ` - ${item.price * item.qty} جنيه`;
-        msg+="\n";
-    });
-    const phone = "201022497595"; // الرقم الصحيح
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-    window.open(url,"_blank");
+    let msg="فاتورة المنتجات:\n";
+    cart.forEach(item=> msg+=`${item.name} x${item.qty} - ${item.price*item.qty} جنيه\n`);
+    const choice = prompt(`هل تريد ارسال الفاتورة على أي رقم؟\n1- 01022495795\n2- 01067070423\n3- 01096005334\nادخل 1 او 2 او 3`);
+    let phone="";
+    if(choice==="1") phone="01022495795";
+    else if(choice==="2") phone="01067070423";
+    else if(choice==="3") phone="01096005334";
+    else { alert("رقم غير صحيح"); return; }
+    openWhatsApp(phone,msg);
     cart=[];
 }
 
+function toggleContact(){
+    const el = document.getElementById("contact-buttons");
+    el.style.display = el.style.display==="none"?"block":"none";
+}
+
+function openWhatsApp(phone,msg="مرحبا"){
+    const url=`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(url,"_blank");
+}
+
 // التحديث التلقائي مرة واحدة عند وجود نسخة جديدة
-const currentVersion = "1.0";
-const savedVersion = localStorage.getItem("siteVersion");
-if(savedVersion !== currentVersion){
-    localStorage.setItem("siteVersion", currentVersion);
+const currentVersion="1.0";
+const savedVersion=localStorage.getItem("siteVersion");
+if(savedVersion!==currentVersion){
+    localStorage.setItem("siteVersion",currentVersion);
     window.location.reload();
 }
 
 displayProducts();
 </script>
-
 </body>
 </html>
