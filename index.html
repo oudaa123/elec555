@@ -2,136 +2,179 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>مملكة الأصليات</title>
+<title>مملكة الأصليات – المحل: جنة – المهندس محمود أبو كشك</title>
 <style>
 body {
-  font-family: Tahoma, sans-serif;
-  background-color: #f9f9f9;
-  text-align: center;
-  margin: 0;
-  padding: 20px;
+    font-family: Tahoma, sans-serif;
+    background-color: #f9f9f9;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
 }
 .logo {
-  background: #25d366;
-  color: white;
-  font-size: 22px;
-  font-weight: bold;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  display: inline-block;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    background: #25d366;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: inline-block;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 .products-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
 }
 .product {
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 15px;
-  width: 200px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
 }
 .product img {
-  width: 100%;
-  border-radius: 5px;
+    width: 100%;
+    border-radius: 5px;
 }
 .name {
-  font-size: 18px;
-  margin: 10px 0;
-  color: #333;
+    font-size: 18px;
+    margin: 10px 0 5px 0;
+    color: #333;
 }
 .price {
-  font-size: 16px;
-  color: #e91e63;
-  margin: 10px 0;
+    font-size: 16px;
+    color: #e91e63;
+    margin: 5px 0;
 }
-button {
-  background-color: #25d366;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 8px 12px;
-  margin: 5px;
-  cursor: pointer;
+.button {
+    background-color: #25d366;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 3px 0;
 }
-button#add-cart {
-  background-color: #ff5722;
+.button.secondary {
+    background-color: #ff9800;
+}
+.quantity {
+    width: 40px;
+    text-align: center;
 }
 </style>
 </head>
 <body>
 
 <div class="logo">
-🌟 مملكة الأصليات – الشركة: جنة – المحل: جنه – المهندس محمود أبو كشك – المحمول: 01067070423 🌟
+🌟 مملكة الأصليات – المحل: جنة – المهندس محمود أبو كشك 🌟
 </div>
 
-<h1>منتجات مملكة الأصليات</h1>
+<h2>المنتجات</h2>
 
-<!-- مربع الباسورد واحد لإظهار كل الأسعار -->
+<!-- باسورد واحد -->
 <div>
-<input type="password" id="password" placeholder="ادخل الباسورد لعرض الأسعار 🔥" />
-<button onclick="showAllPrices()">عرض الأسعار</button>
+    <input type="password" id="password" placeholder="ادخل الباسورد لعرض الأسعار 🔥" />
 </div>
 
 <div class="products-container" id="products-container"></div>
 
+<br>
+<button class="button secondary" onclick="sendCart()">تم</button>
+
 <script>
 // الباسورد
-const password = "7777";
+const correctPassword = "7777";
 
 // المنتجات: الاسم بالعربي + اسم الصورة بالإنجليزي + السعر
 const products = [
-  { name: "سماعة الوان", image: "شاحن الك 31.jpg", price: 11 },
-  { name: "سماعة ايفون", image: "كابل الك 4في1.jpg", price: 65 },
-  { name: "سماعة بلو 21", image: "samaa_blue21.jpg", price: 35 },
-  { name: "سماعة سامسونج", image: "samaa_samsung.jpg", price: 35 },
+  { name: "سماعة الوان", image: "شاحن واو تايب سي.jpg", price: 11 },
+  { name: "سماعة ايفون", image: "كابل الك 31.jpg", price: 65 },
+  { name: "سماعة بلو 21", image: "كابل الك 31.jpg", price: 35 },
+  { name: "سماعة سامسونج", image: "كابل الك 4في1.jpg", price: 35 },
   { name: "شاحن التر 02 تايب سي", image: "charger_02.jpg", price: 65 },
   { name: "شاحن واو تايب سي", image: "charger_wow.jpg", price: 28 },
   { name: "كابل الك 31", image: "cable_k31.jpg", price: 40 },
-  { name: "كابل دليفن تايب سي", image: "cable_delven_typec.jpg", price: 11 }
+  { name: "كابل دليفن تايب سي", image: "cable_delven_typc.jpg", price: 11 }
 ];
+
+// سلة المنتجات
+let cart = [];
 
 // عرض المنتجات
 const container = document.getElementById("products-container");
-
 products.forEach((product, index) => {
-    container.innerHTML += `
-        <div class="product">
-            <img src="${product.image}" alt="${product.name}" />
-            <div class="name">${product.name}</div>
-            <div class="price" id="price-${index}">---</div>
-            <button onclick="orderNow(${index})">اطلب الآن</button>
-        </div>
+    const productDiv = document.createElement("div");
+    productDiv.className = "product";
+    productDiv.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" />
+        <div class="name">${product.name}</div>
+        <div class="price" id="price-${index}">---</div>
+        <input type="number" id="qty-${index}" class="quantity" value="1" min="1" />
+        <br>
+        <button class="button" onclick="addToCart(${index})">أضف إلى السلة</button>
+        <button class="button" onclick="orderNow(${index})">اطلب الآن</button>
     `;
+    container.appendChild(productDiv);
 });
 
-// دالة لإظهار كل الأسعار بعد ادخال الباسورد
-function showAllPrices() {
-    const input = document.getElementById("password").value;
-    if(input === password) {
-        products.forEach((product, index) => {
-            document.getElementById("price-" + index).innerText = `السعر: ${product.price} جنيه 🔥`;
-        });
-    } else {
-        alert("الباسورد خطأ!");
-    }
+// دالة عرض الأسعار بالباسورد
+document.getElementById("password").addEventListener("input", function() {
+    const pwd = this.value;
+    products.forEach((product, index) => {
+        const priceDiv = document.getElementById("price-" + index);
+        if(pwd === correctPassword){
+            priceDiv.innerText = product.price + " جنيه";
+        } else {
+            priceDiv.innerText = "---";
+        }
+    });
+});
+
+// أضف إلى السلة
+function addToCart(index){
+    const qty = parseInt(document.getElementById("qty-" + index).value);
+    const item = {...products[index], qty: qty};
+    cart.push(item);
+    alert("تم إضافة المنتج إلى السلة");
 }
 
-// دالة اطلب الآن
-function orderNow(index) {
-    const message = `مرحبًا، أريد طلب المنتج: ${products[index].name} بسعر ${products[index].price} جنيه`;
-    const phoneNumbers = [
-        "201022495795", // المحل
-        "201067070423", 
-        "201096005334" // السيارة
-    ];
-    // يفتح WhatsApp بالرقم الأول
-    window.open(`https://api.whatsapp.com/send?phone=${phoneNumbers[0]}&text=${encodeURIComponent(message)}`, "_blank");
+// اطلب الآن
+function orderNow(index){
+    const pwd = document.getElementById("password").value;
+    let msg = `المنتج: ${products[index].name}`;
+    if(pwd === correctPassword){
+        msg += `\nالسعر: ${products[index].price} جنيه`;
+    }
+    const phone = "01022495795"; // الرقم الرئيسي
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+}
+
+// أرسل السلة كاملة
+function sendCart(){
+    if(cart.length === 0){
+        alert("السلة فارغة!");
+        return;
+    }
+    const pwd = document.getElementById("password").value;
+    let msg = "فاتورة المنتجات:\n";
+    cart.forEach(item => {
+        msg += `${item.name} x${item.qty}`;
+        if(pwd === correctPassword){
+            msg += ` - ${item.price * item.qty} جنيه`;
+        }
+        msg += "\n";
+    });
+    const phone = "01022495795"; // الرقم الرئيسي
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+    cart = []; // تفريغ السلة بعد الإرسال
 }
 </script>
 
