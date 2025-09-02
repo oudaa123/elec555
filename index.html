@@ -112,6 +112,26 @@ button {
     right: 20px;
     background-color: #25d366;
 }
+
+/* قائمة اختيار الأرقام */
+.phone-options {
+    display: none;
+    position: fixed;
+    bottom: 70px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    z-index: 1001;
+    text-align: center;
+}
+.phone-options button {
+    display: block;
+    margin: 5px;
+    background-color: #25d366;
+    color: white;
+    width: 180px;
+}
 </style>
 </head>
 <body>
@@ -183,11 +203,7 @@ function orderNow(index){
     if(pwd === correctPassword){
         msg += `\nالسعر: ${products[index].price} جنيه`;
     }
-    const phone = prompt("ادخل رقم واتساب للتواصل:", "01022495795"); 
-    if(phone){
-        const url = `https://wa.me/20${phone.replace(/^0/,"")}?text=${encodeURIComponent(msg)}`;
-        window.open(url, "_blank");
-    }
+    showPhoneOptions(msg);
 }
 
 function addToCart(index){
@@ -216,26 +232,38 @@ function sendCart(){
         }
         msg += "\n";
     });
-    const phone = prompt("ادخل رقم واتساب لإرسال الفاتورة:", "01022495795");
-    if(phone){
-        const url = `https://wa.me/20${phone.replace(/^0/,"")}?text=${encodeURIComponent(msg)}`;
-        window.open(url, "_blank");
-    }
+    showPhoneOptions(msg);
     cart = [];
 }
 
+function showPhoneOptions(msg){
+    const optionsDiv = document.getElementById("phone-options");
+    optionsDiv.style.display = "block";
+    optionsDiv.querySelectorAll("button").forEach(btn=>{
+        btn.onclick = ()=>{
+            const phone = btn.getAttribute("data-phone");
+            const url = `https://wa.me/20${phone.replace(/^0/,"")}?text=${encodeURIComponent(msg)}`;
+            window.open(url,"_blank");
+            optionsDiv.style.display = "none";
+        }
+    });
+}
+
 function contactUs(){
-    const phone = prompt("ادخل رقم واتساب للتواصل:", "01022495795");
-    if(phone){
-        const url = `https://wa.me/20${phone.replace(/^0/,"")}`;
-        window.open(url, "_blank");
-    }
+    showPhoneOptions("مرحبا، أريد التواصل معكم");
 }
 </script>
 
 <!-- الأزرار الثابتة -->
 <div id="floating-invoice" class="fixed-btn" onclick="sendCart()">الفاتورة الخاصة بك</div>
 <div id="contact-us" class="fixed-btn" onclick="contactUs()">تواصل معنا</div>
+
+<!-- خيارات الأرقام -->
+<div id="phone-options" class="phone-options">
+    <button data-phone="01022495795">رقم المحل</button>
+    <button data-phone="01067070423">رقم السيارة</button>
+    <button data-phone="01096005334">رقم إضافي</button>
+</div>
 
 </body>
 </html>
