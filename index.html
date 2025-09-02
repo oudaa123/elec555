@@ -18,9 +18,15 @@ body {
     font-weight: bold;
     padding: 15px;
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     display: inline-block;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.quran {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+    font-weight: bold;
 }
 .products-container {
     display: flex;
@@ -80,12 +86,44 @@ button {
     0%, 50%, 100% { opacity: 1; }
     25%, 75% { opacity: 0; }
 }
+
+/* زر الفاتورة العائم */
+#floating-invoice {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color:#2196F3;
+    color:white;
+    padding:15px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
+
+/* زر تواصل معنا العائم */
+#contact-us {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    z-index: 1000;
+}
 </style>
 </head>
 <body>
 
 <div class="logo">
 🌟 مملكة الأصليات – المحل: جنه – المهندس محمود أبو كشك 🌟
+</div>
+
+<div class="quran">
+"سبحانك لا علم لنا إلا ما علمتنا..." 
 </div>
 
 <h1>منتجات مملكة الأصليات</h1>
@@ -101,12 +139,9 @@ let cart = [];
 
 // المنتجات
 const products = [
-    // المنتجات الجديدة
     { name: "سماعة الوان", image: "samaa_alwan.jpg", price: 11, new: true },
     { name: "سماعة ايفون", image: "samaa_iphone.jpg", price: 65, new: true },
     { name: "شاحن واو تايب سي", image: "charger_wao.jpg", price: 28, new: true },
-
-    // المنتجات القديمة
     { name: "سماعة بلو 21", image: "blue_21_headphones.jpg", price: 35, new: false },
     { name: "سماعة سامسونج", image: "samaa_samsung.jpg", price: 35, new: false },
     { name: "شاحن التر 02 تايب سي", image: "charger_02.jpg", price: 65, new: false },
@@ -114,7 +149,6 @@ const products = [
     { name: "كابل دليفن تايب سي", image: "cable_delven_typec.jpg", price: 11, new: false }
 ];
 
-// عرض المنتجات
 function renderProducts() {
     const container = document.getElementById("products-container");
     container.innerHTML = "";
@@ -134,7 +168,6 @@ function renderProducts() {
 
 renderProducts();
 
-// اظهار الأسعار بعد الباسورد
 function showPrices() {
     const pwd = document.getElementById("password").value;
     products.forEach((product, index) => {
@@ -147,19 +180,17 @@ function showPrices() {
     });
 }
 
-// اطلب الآن
 function orderNow(index){
     const pwd = document.getElementById("password").value;
     let msg = `المنتج: ${products[index].name}`;
     if(pwd === correctPassword){
         msg += `\nالسعر: ${products[index].price} جنيه`;
     }
-    const phone = "201022495795"; // الرقم مصحح بصيغة دولية للواتس
+    const phone = "201022495795"; 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");
 }
 
-// اضف الى السلة
 function addToCart(index){
     const qty = parseInt(document.getElementById(`qty-${index}`).value);
     const product = products[index];
@@ -172,7 +203,6 @@ function addToCart(index){
     alert(`تمت إضافة ${qty} من ${product.name} إلى السلة`);
 }
 
-// ارسال الفاتورة
 function sendCart(){
     if(cart.length === 0){
         alert("السلة فارغة!");
@@ -187,14 +217,23 @@ function sendCart(){
         }
         msg += "\n";
     });
-    const phone = "201022495795"; // الرقم مصحح
+    const phone = "201022495795"; 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");
     cart = [];
 }
+
+// زر تواصل معنا
+function contactUs(){
+    const phone = "201022495795";
+    const url = `https://wa.me/${phone}`;
+    window.open(url, "_blank");
+}
 </script>
 
-<button onclick="sendCart()" style="background-color:#2196F3;color:white;padding:10px 20px;margin-top:20px;">الفاتورة الخاصة بك</button>
+<!-- الأزرار العائمة -->
+<div id="floating-invoice" onclick="sendCart()">الفاتورة الخاصة بك</div>
+<div id="contact-us" onclick="contactUs()">تواصل معنا</div>
 
 </body>
 </html>
