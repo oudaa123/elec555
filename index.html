@@ -28,28 +28,35 @@ body {
     margin-bottom: 15px;
     font-weight: bold;
 }
+
+/* قائمة المنتجات عمودية */
 .products-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     gap: 15px;
 }
 .product {
     background: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 10px;
-    width: 200px;
-    position: relative;
+    padding: 15px;
+    width: 300px;
+    display: flex;
+    gap: 15px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 .product img {
-    width: 100%;
+    width: 120px;
     border-radius: 5px;
+}
+.product-details {
+    flex: 1;
+    text-align: right;
 }
 .name {
     font-size: 18px;
-    margin: 5px 0;
+    font-weight: bold;
 }
 .price {
     font-size: 16px;
@@ -62,13 +69,13 @@ input.quantity {
 }
 button {
     padding: 5px 10px;
-    margin: 3px;
+    margin: 3px 0;
     border-radius: 5px;
     border: none;
     cursor: pointer;
 }
-.order-btn { background-color: #25d366; color: white; }
-.cart-btn { background-color: #ff9800; color: white; }
+.order-btn { background-color: #25d366; color: white; width: 100%; }
+.cart-btn { background-color: #ff9800; color: white; width: 100%; }
 .promo-label {
     position: absolute;
     top: 5px;
@@ -96,7 +103,7 @@ button {
     color: white;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     z-index: 1000;
     text-align: center;
 }
@@ -113,11 +120,11 @@ button {
     background-color: #25d366;
 }
 
-/* قائمة اختيار الأرقام */
+/* خيارات الأرقام */
 .phone-options {
     display: none;
     position: fixed;
-    bottom: 70px;
+    bottom: 80px;
     padding: 10px;
     border-radius: 10px;
     background-color: white;
@@ -127,7 +134,7 @@ button {
 }
 .phone-options button {
     display: block;
-    margin: 5px;
+    margin: 5px auto;
     background-color: #25d366;
     color: white;
     width: 180px;
@@ -172,13 +179,15 @@ function renderProducts() {
     products.forEach((product, index) => {
         container.innerHTML += `
         <div class="product">
-            ${product.new?'<span class="promo-label">منتج جديد</span>':''}
             <img src="${product.image}" alt="${product.name}">
-            <div class="name">${product.name}</div>
-            <div class="price" id="price-${index}">ادخل الباسورد لعرض السعر</div>
-            <input type="number" id="qty-${index}" class="quantity" value="1" min="1">
-            <button class="order-btn" onclick="orderNow(${index})">اطلب الآن</button>
-            <button class="cart-btn" onclick="addToCart(${index})">أضف إلى السلة</button>
+            <div class="product-details">
+                ${product.new?'<span class="promo-label">منتج جديد</span>':''}
+                <div class="name">${product.name}</div>
+                <div class="price" id="price-${index}">ادخل الباسورد لعرض السعر</div>
+                <input type="number" id="qty-${index}" class="quantity" value="1" min="1">
+                <button class="order-btn" onclick="orderNow(${index})">اطلب الآن</button>
+                <button class="cart-btn" onclick="addToCart(${index})">أضف إلى السلة</button>
+            </div>
         </div>`;
     });
 }
