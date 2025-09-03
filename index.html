@@ -2,12 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>مملكة الأصليات – شركة جنة لإكسسوار المحمول بنبروه</title>
-<meta name="description" content="مملكة الأصليات – شركة جنة لإكسسوار المحمول بنبروه: أفضل أسعار إكسسوارات المحمول الأصلية (سماعات، شواحن، كابلات، جرابات) بجودة عالية وخدمة سريعة.">
-<meta name="keywords" content="مملكة الأصليات, شركة جنة, اكسسوار المحمول, بنبروه, سماعات, شواحن, كابلات, جرابات, متجر موبيلات">
-
+<meta name="description" content="مملكة الأصليات – شركة جنة لإكسسوار المحمول بنبروه: أفضل أسعار إكسسوارات المحمول الأصلية (سماعات، شواحن، كابلات، جرابات).">
+<meta name="keywords" content="مملكة الأصليات, شركة جنة, اكسسوار المحمول, بنبروه, سماعات, شواحن, كابلات, جرابات">
 <style>
 body {
     font-family: Tahoma, sans-serif;
@@ -38,6 +35,17 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 15px;
+    margin-bottom: 40px;
+}
+.section-title {
+    width: 100%;
+    background: #2196F3;
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin: 20px 0;
 }
 .product {
     background: #fff;
@@ -92,8 +100,8 @@ button {
     25%, 75% { opacity: 0; }
 }
 
-/* زر الفاتورة العائم */
-#floating-invoice {
+/* زر المنتجات */
+#floating-products {
     position: fixed;
     bottom: 20px;
     left: 20px;
@@ -128,128 +136,143 @@ button {
 </div>
 
 <div class="quran">
-"سبحانك لا علم لنا إلا ما علمتنا..."
+"سبحانك لا علم لنا إلا ما علمتنا..." 
 </div>
 
 <h1>منتجات مملكة الأصليات</h1>
-<h2>شركة جنة لإكسسوار المحمول – بنبروه</h2>
 
 <input type="password" id="password" placeholder="ادخل الباسورد لعرض الأسعار 🔥">
 <button onclick="showPrices()">عرض الأسعار</button>
 
-<div class="products-container" id="products-container"></div>
+<!-- سماعات -->
+<div class="section-title">🎧 سماعات</div>
+<div class="products-container" id="headphones"></div>
+
+<!-- شواحن -->
+<div class="section-title">🔌 شواحن</div>
+<div class="products-container" id="chargers"></div>
+
+<!-- كابلات -->
+<div class="section-title">🔗 كابلات</div>
+<div class="products-container" id="cables"></div>
 
 <script>
 const correctPassword = "7777";
 let cart = [];
 
 // المنتجات
-const products = [
-    { name: "سماعة الوان", image: "samaa_alwan.jpg", price: 11, new: true },
-    { name: "سماعة ايفون", image: "samaa_iphone.jpg", price: 65, new: true },
-    { name: "شاحن واو تايب سي", image: "charger_wao.jpg", price: 28, new: true },
-    { name: "سماعة بلو 21", image: "blue_21_headphones.jpg", price: 35, new: false },
-    { name: "سماعة سامسونج", image: "samaa_samsung.jpg", price: 35, new: false },
-    { name: "شاحن التر 02 تايب سي", image: "charger_02.jpg", price: 65, new: false },
-    { name: "كابل الك 31", image: "cable_k31.jpg", price: 40, new: false },
-    { name: "كابل دليفن تايب سي", image: "cable_delven_typec.jpg", price: 11, new: false }
-];
+const products = {
+    headphones: [
+        { name: "سماعة الوان", image: "samaa_alwan.jpg", price: 11, new: true },
+        { name: "سماعة ايفون", image: "samaa_iphone.jpg", price: 65, new: true },
+        { name: "سماعة بلو 21", image: "blue_21_headphones.jpg", price: 35, new: false },
+        { name: "سماعة سامسونج", image: "samaa_samsung.jpg", price: 35, new: false }
+    ],
+    chargers: [
+        { name: "شاحن واو تايب سي", image: "charger_wao.jpg", price: 28, new: true },
+        { name: "شاحن التر 02 تايب سي", image: "charger_02.jpg", price: 65, new: false }
+    ],
+    cables: [
+        { name: "كابل الك 31", image: "cable_k31.jpg", price: 40, new: false },
+        { name: "كابل دليفن تايب سي", image: "cable_delven_typec.jpg", price: 11, new: false }
+    ]
+};
 
+// عرض المنتجات
 function renderProducts() {
-    const container = document.getElementById("products-container");
-    container.innerHTML = "";
-    products.forEach((product, index) => {
-        container.innerHTML += `
-        <div class="product">
-            ${product.new?'<span class="promo-label">منتج جديد</span>':''}
-            <img src="${product.image}" alt="${product.name} - مملكة الأصليات - شركة جنة لإكسسوار المحمول بنبروه">
-            <div class="name">${product.name}</div>
-            <div class="price" id="price-${index}">ادخل الباسورد لعرض السعر</div>
-            <input type="number" id="qty-${index}" class="quantity" value="1" min="1">
-            <button class="order-btn" onclick="orderNow(${index})">اطلب الآن</button>
-            <button class="cart-btn" onclick="addToCart(${index})">أضف إلى السلة</button>
-        </div>`;
-    });
+    for(const section in products){
+        const container = document.getElementById(section);
+        products[section].forEach((product, index) => {
+            container.innerHTML += `
+            <div class="product">
+                ${product.new?'<span class="promo-label">منتج جديد</span>':''}
+                <img src="${product.image}" alt="${product.name}">
+                <div class="name">${product.name}</div>
+                <div class="price" id="price-${section}-${index}">ادخل الباسورد لعرض السعر</div>
+                <input type="number" id="qty-${section}-${index}" class="quantity" value="1" min="1">
+                <button class="order-btn" onclick="orderNow('${section}',${index})">اطلب الآن</button>
+                <button class="cart-btn" onclick="addToCart('${section}',${index})">أضف إلى المنتجات</button>
+            </div>`;
+        });
+    }
 }
-
 renderProducts();
 
+// عرض الأسعار
 function showPrices() {
     const pwd = document.getElementById("password").value;
-    products.forEach((product, index) => {
-        const priceDiv = document.getElementById("price-" + index);
-        if(pwd === correctPassword){
-            priceDiv.textContent = `السعر: ${product.price} جنيه`;
-        } else {
-            priceDiv.textContent = "ادخل الباسورد لعرض السعر";
-        }
-    });
+    for(const section in products){
+        products[section].forEach((product, index) => {
+            const priceDiv = document.getElementById(`price-${section}-${index}`);
+            if(pwd === correctPassword){
+                priceDiv.textContent = `السعر: ${product.price} جنيه`;
+            } else {
+                priceDiv.textContent = "ادخل الباسورد لعرض السعر";
+            }
+        });
+    }
 }
 
-function orderNow(index){
+// طلب منتج
+function orderNow(section, index){
     const pwd = document.getElementById("password").value;
-    let msg = `المنتج: ${products[index].name}`;
+    let msg = `المنتج: ${products[section][index].name}`;
     if(pwd === correctPassword){
-        msg += `\nالسعر: ${products[index].price} جنيه`;
+        msg += `\nالسعر: ${products[section][index].price} جنيه`;
     }
-
-    // العميل يختار الرقم
-    const phone = prompt("اختر رقم للتواصل:\n1) 01022495795 (المحل)\n2) 01067070423 (المحل)\n3) 01096005334 (السيارة)");
-    if(phone){
-        const url = `https://wa.me/2${phone}?text=${encodeURIComponent(msg)}`;
-        window.open(url, "_blank");
-    }
+    const url = `https://wa.me/201022495795?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
 }
 
-function addToCart(index){
-    const qty = parseInt(document.getElementById(`qty-${index}`).value);
-    const product = products[index];
+// إضافة للسلة
+function addToCart(section, index){
+    const qty = parseInt(document.getElementById(`qty-${section}-${index}`).value);
+    const product = products[section][index];
     const existing = cart.find(item => item.name === product.name);
     if(existing){
         existing.qty += qty;
     } else {
         cart.push({ name: product.name, price: product.price, qty });
     }
-    alert(`تمت إضافة ${qty} من ${product.name} إلى السلة`);
+    alert(`تمت إضافة ${qty} من ${product.name} إلى منتجاتك`);
 }
 
+// إرسال الفاتورة
 function sendCart(){
     if(cart.length === 0){
-        alert("السلة فارغة!");
+        alert("لا توجد منتجات!");
         return;
     }
     const pwd = document.getElementById("password").value;
-    let msg = "فاتورة المنتجات:\n";
+    let msg = "📦 منتجاتك:\n\n";
+    let total = 0;
     cart.forEach(item => {
-        msg += `${item.name} x${item.qty}`;
+        msg += `${item.name} ×${item.qty}`;
         if(pwd === correctPassword){
-            msg += ` - ${item.price * item.qty} جنيه`;
+            const subtotal = item.price * item.qty;
+            total += subtotal;
+            msg += ` = ${subtotal} جنيه`;
         }
         msg += "\n";
     });
-
-    // العميل يختار الرقم
-    const phone = prompt("اختر رقم للتواصل:\n1) 01022495795 (المحل)\n2) 01067070423 (المحل)\n3) 01096005334 (السيارة)");
-    if(phone){
-        const url = `https://wa.me/2${phone}?text=${encodeURIComponent(msg)}`;
-        window.open(url, "_blank");
+    if(pwd === correctPassword){
+        msg += `\nالإجمالي: ${total} جنيه`;
     }
+    const url = `https://wa.me/201022495795?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
     cart = [];
 }
 
-// زر تواصل معنا
+// تواصل معنا
 function contactUs(){
-    const phone = prompt("اختر رقم للتواصل:\n1) 01022495795 (المحل)\n2) 01067070423 (المحل)\n3) 01096005334 (السيارة)");
-    if(phone){
-        const url = `https://wa.me/2${phone}`;
-        window.open(url, "_blank");
-    }
+    const url = `https://wa.me/201022495795`;
+    window.open(url, "_blank");
 }
 </script>
 
 <!-- الأزرار العائمة -->
-<div id="floating-invoice" onclick="sendCart()">الفاتورة الخاصة بك</div>
-<div id="contact-us" onclick="contactUs()">تواصل معنا</div>
+<div id="floating-products" onclick="sendCart()">📦 منتجاتك</div>
+<div id="contact-us" onclick="contactUs()">📞 تواصل معنا</div>
 
 </body>
 </html>
