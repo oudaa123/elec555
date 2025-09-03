@@ -160,6 +160,13 @@ button {
 const correctPassword = "7777";
 let cart = [];
 
+// أرقام المحل
+const phones = {
+    "📞 واتس المحل": "201022495795",
+    "🏪 المحل": "201067070423",
+    "🚗 السياره": "201096005334"
+};
+
 // المنتجات
 const products = {
     headphones: [
@@ -213,6 +220,18 @@ function showPrices() {
     }
 }
 
+// اختيار رقم للتواصل
+function choosePhone(msg){
+    let options = Object.keys(phones).map(name => `${name}`).join("\n");
+    let choice = prompt(`اختر رقم للتواصل:\n${options}`);
+    if(choice && phones[choice]){
+        const url = `https://wa.me/${phones[choice]}?text=${encodeURIComponent(msg)}`;
+        window.open(url, "_blank");
+    } else {
+        alert("اختيار غير صحيح!");
+    }
+}
+
 // طلب منتج
 function orderNow(section, index){
     const pwd = document.getElementById("password").value;
@@ -220,8 +239,7 @@ function orderNow(section, index){
     if(pwd === correctPassword){
         msg += `\nالسعر: ${products[section][index].price} جنيه`;
     }
-    const url = `https://wa.me/201022495795?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
+    choosePhone(msg);
 }
 
 // إضافة للسلة
@@ -258,15 +276,13 @@ function sendCart(){
     if(pwd === correctPassword){
         msg += `\nالإجمالي: ${total} جنيه`;
     }
-    const url = `https://wa.me/201022495795?text=${encodeURIComponent(msg)}`;
-    window.open(url, "_blank");
+    choosePhone(msg);
     cart = [];
 }
 
 // تواصل معنا
 function contactUs(){
-    const url = `https://wa.me/201022495795`;
-    window.open(url, "_blank");
+    choosePhone("السلام عليكم، أريد الاستفسار 👋");
 }
 </script>
 
