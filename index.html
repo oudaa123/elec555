@@ -205,6 +205,11 @@ header {
 .category-btn[data-category="بطارية"]::before { content: "🔋 "; }
 .category-btn[data-category="اخرى"]::before { content: "📦 "; }
 
+/* إخفاء الأعداد تحت الأقسام */
+.category-count {
+  display: none !important;
+}
+
 /* تصميم الأقسام الرئيسية */
 .categories-grid {
   display: grid;
@@ -249,15 +254,6 @@ header {
   font-weight: bold;
   color: var(--text-color);
   margin-bottom: 8px;
-}
-
-.category-count {
-  background: var(--primary-color);
-  color: white;
-  padding: 4px 10px;
-  border-radius: 15px;
-  font-size: 12px;
-  font-weight: bold;
 }
 
 .products-grid {
@@ -1646,6 +1642,22 @@ header {
   .category-btn, .header-buttons button, .add-to-cart-btn {
     -webkit-touch-callout: none;
   }
+  
+  /* تحسينات خاصة للآيفون */
+  .categories-bar {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  .product-image-container img {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  .modal-content {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
 }
 
 /* تحسينات للشاشات الصغيرة جدا */
@@ -2075,6 +2087,7 @@ function getProductCategory(productName) {
   }
   
   if (name.includes('صب') || name.includes('سبت') || name.includes('spt') || name.includes('شحن متنقل')) return 'صب';
+  if (name.includes('الفلاشات') || name.includes('فلاشة') || name.includes('spt') || name.includes('فلاشة')) return 'فلاشة';
   if (name.includes('كابل') || name.includes('سلك') || name.includes('كورد') || name.includes('cable')) return 'كابل';
   if (name.includes('شاحن') || name.includes('شحن') || name.includes('charger') || name.includes('adaptor')) return 'شاحن';
   if (name.includes('جراب') || name.includes('غطاء') || name.includes('كفر') || name.includes('cover') || name.includes('case')) return 'جراب';
@@ -2235,6 +2248,7 @@ function renderCategories() {
     { id: 'اسكرين', name: 'الاسكرينات', icon: '🖥️', color: '#ff4444' },
     { id: 'سماعة', name: 'السماعات', icon: '🎧', color: '#25d366' },
     { id: 'بطارية', name: 'البطاريات', icon: '🔋', color: '#ff9900' },
+   { id: 'فلاشة', name: 'الفلاشات', icon: '/', color: '#ff9900' },
     { id: 'اخرى', name: 'منتجات أخرى', icon: '📦', color: '#8a2be2' }
   ];
   
@@ -2250,7 +2264,6 @@ function renderCategories() {
            style="border-color: ${category.color};">
         <div class="category-icon">${category.icon}</div>
         <div class="category-title">${category.name}</div>
-        <div class="category-count">${count} منتج</div>
       </div>
     `;
   });
@@ -2283,6 +2296,7 @@ function showProductsView(category) {
     'اسكرين': 'الاسكرينات',
     'سماعة': 'السماعات',
     'بطارية': 'البطاريات',
+    'فلاشة': 'الفلاشات',
     'اخرى': 'منتجات أخرى'
   };
   
@@ -2442,35 +2456,7 @@ function filterProductsByCategory(category) {
 }
 
 function updateCategoryCounts() {
-  const categories = ['all', 'صب', 'كابل', 'شاحن', 'جراب', 'اسكرين', 'سماعة', 'بطارية', 'اخرى'];
-  
-  categories.forEach(category => {
-    let count = 0;
-    
-    if (category === 'all') {
-      count = productsData.length;
-    } else {
-      count = productsData.filter(product => {
-        const productCategory = getProductCategory(product.name);
-        return productCategory === category;
-      }).length;
-    }
-    
-    const btn = document.querySelector(`.category-btn[data-category="${category}"]`);
-    if (btn) {
-      const oldCount = btn.querySelector('.category-count');
-      if (oldCount) {
-        oldCount.remove();
-      }
-      
-      if (count > 0) {
-        const countElement = document.createElement('span');
-        countElement.className = 'category-count';
-        countElement.textContent = count;
-        btn.appendChild(countElement);
-      }
-    }
-  });
+  // تم إزالة هذا الجزء لأنه لم يعد هناك حاجة لعرض الأعداد
 }
 
 function updateShippingBar() {
@@ -3092,6 +3078,8 @@ function showSearchSuggestion(keyword) {
     suggestedCategory = 'اسكرين';
   } else if (keyword.includes('بطارية') || keyword.includes('باور')) {
     suggestedCategory = 'بطارية';
+  } else if (keyword.includes('فلاشة') || keyword.includes('فلاشة')) {
+    suggestedCategory = 'فلاشة';
   }
   
   if (suggestedCategory !== currentCategory && suggestedCategory !== 'all') {
@@ -3119,6 +3107,7 @@ function getCategoryName(category) {
     'جراب': 'الجرابات',
     'اسكرين': 'الاسكرينات',
     'سماعة': 'السماعات',
+    'فلاشة': 'الفلاشات',
     'بطارية': 'البطاريات',
     'اخرى': 'منتجات أخرى'
   };
