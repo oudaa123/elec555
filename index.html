@@ -2,7 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>جميع منتجات جنة</title>
 <style>
 :root {
@@ -21,17 +23,24 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
 body { 
-  font-family: Tahoma, sans-serif; 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Tahoma, sans-serif; 
   background: var(--light-bg);
   font-size: 14px;
   padding-bottom: 60px;
-  -webkit-text-size-adjust: 100%;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+  position: relative;
 }
 
+/* تحسينات للعرض على الهواتف */
 header {
   background: #131921;
   color: white;
@@ -43,7 +52,8 @@ header {
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  min-height: 140px;
+  min-height: auto;
+  width: 100%;
 }
 
 .header-buttons {
@@ -54,7 +64,9 @@ header {
    gap: 5px;
    position: relative;
    z-index: 1001;
+   width: 100%;
 }
+
 .header-buttons button {
   background: var(--secondary-color);
   border: 1px solid #fcd200;
@@ -68,7 +80,10 @@ header {
   flex: 1;
   min-width: 0;
   max-width: 140px;
+  -webkit-appearance: none;
+  appearance: none;
 }
+
 .header-buttons button:hover { background: #f7ca00; }
 
 #cart-count {
@@ -111,6 +126,7 @@ header {
   opacity: 1 !important;
   text-align: center;
   padding: 10px 0;
+  width: 100%;
 }
 
 .categories-bar {
@@ -125,6 +141,7 @@ header {
   -webkit-overflow-scrolling: touch;
   justify-content: center;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .categories-bar::-webkit-scrollbar {
@@ -146,6 +163,8 @@ header {
   min-width: max-content;
   color: #495057;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .category-btn:hover {
@@ -192,6 +211,7 @@ header {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   padding: 20px;
+  width: 100%;
 }
 
 .category-card {
@@ -209,6 +229,7 @@ header {
   cursor: pointer;
   text-align: center;
   min-height: 180px;
+  width: 100%;
 }
 
 .category-card:hover {
@@ -244,6 +265,7 @@ header {
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 15px;
   padding: 15px;
+  width: 100%;
 }
 
 .product-item {
@@ -257,6 +279,7 @@ header {
   transition: all 0.3s ease;
   position: relative;
   border: 2px solid transparent;
+  width: 100%;
 }
 
 .product-item:hover {
@@ -330,6 +353,8 @@ header {
   border-radius: 6px;
   text-align: center;
   font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .add-to-cart-btn {
@@ -342,6 +367,8 @@ header {
   font-weight: bold;
   font-size: 14px;
   transition: all 0.3s;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .add-to-cart-btn:hover {
@@ -477,6 +504,8 @@ header {
   z-index: 1002;
   overflow-y: auto;
   padding: 15px;
+  width: 100%;
+  height: 100%;
 }
 
 .modal-content {
@@ -506,6 +535,8 @@ header {
   height: 30px;
   cursor: pointer;
   font-weight: bold;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .invoice-header {
@@ -580,6 +611,8 @@ header {
   transition: 0.3s; 
   flex: 1;
   min-width: 120px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 .modal-buttons button:hover { background: #6a1fbf; }
 
@@ -606,6 +639,8 @@ header {
   margin: 10px 0;
   padding: 0 5px;
   z-index: 1001;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 #searchBox {
@@ -615,6 +650,9 @@ header {
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 14px;
+  min-width: 200px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 #offerBtn {
@@ -627,6 +665,8 @@ header {
   cursor: pointer;
   font-size: 14px;
   white-space: nowrap;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 #saveCartBtn {
@@ -647,6 +687,8 @@ header {
   display: flex;
   align-items: center;
   gap: 5px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 #saveCartBtn:hover {
@@ -714,6 +756,8 @@ header {
   z-index: 1004;
   overflow-y: auto;
   padding: 15px;
+  width: 100%;
+  height: 100%;
 }
 
 .password-content {
@@ -739,6 +783,8 @@ header {
   height: 30px;
   cursor: pointer;
   font-weight: bold;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 #passwordInput {
@@ -749,6 +795,8 @@ header {
   border-radius: 8px;
   font-size: 16px;
   text-align: center;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .password-buttons {
@@ -765,6 +813,8 @@ header {
   cursor: pointer;
   font-weight: bold;
   font-size: 16px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 #submitPassword {
@@ -806,6 +856,8 @@ header {
   font-weight: bold;
   text-align: center;
   animation: pulse 2s infinite;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 @keyframes pulse {
@@ -823,6 +875,8 @@ header {
   cursor: pointer;
   font-weight: bold;
   margin-left: 5px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 #clearCartBtn:hover {
@@ -867,6 +921,8 @@ header {
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .back-button:hover {
@@ -922,6 +978,8 @@ header {
   align-items: center;
   gap: 5px;
   white-space: nowrap;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .support-button:hover {
@@ -941,6 +999,8 @@ header {
   align-items: center;
   gap: 5px;
   white-space: nowrap;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .request-product-button:hover {
@@ -956,6 +1016,7 @@ header {
   flex-wrap: wrap;
   position: relative;
   z-index: 1001;
+  width: 100%;
 }
 
 .products-loading {
@@ -1122,6 +1183,8 @@ header {
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .saved-invoice-load {
@@ -1158,6 +1221,8 @@ header {
   z-index: 1007;
   overflow-y: auto;
   padding: 15px;
+  width: 100%;
+  height: 100%;
 }
 
 .numbers-content {
@@ -1183,6 +1248,8 @@ header {
   height: 30px;
   cursor: pointer;
   font-weight: bold;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .numbers-title {
@@ -1205,6 +1272,8 @@ header {
   text-decoration: none;
   font-weight: bold;
   transition: all 0.3s;
+  display: block;
+  text-align: center;
 }
 
 .number-item:hover {
@@ -1252,6 +1321,8 @@ header {
   font-size: 14px;
   margin: 0 auto;
   display: block;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .delete-btn {
@@ -1264,6 +1335,8 @@ header {
   font-weight: bold;
   font-size: 12px;
   margin-top: 5px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .error-message {
@@ -1288,6 +1361,8 @@ header {
   font-weight: bold;
   margin-top: 15px;
   font-size: 16px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .error-message button:hover {
@@ -1305,6 +1380,8 @@ header {
   font-weight: bold;
   font-size: 14px;
   white-space: nowrap;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 #updateBtn:hover {
@@ -1324,6 +1401,8 @@ header {
   align-items: center;
   gap: 8px;
   transition: all 0.3s;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .back-to-categories:hover {
@@ -1343,6 +1422,7 @@ header {
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
+/* تحسينات للهواتف */
 @media (max-width: 768px) {
   .products-grid {
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -1407,6 +1487,19 @@ header {
   
   .categories-bar {
     justify-content: flex-start;
+  }
+  
+  .notifications-sidebar {
+    position: relative;
+    top: auto;
+    left: auto;
+    max-width: 100%;
+    padding: 10px;
+  }
+  
+  .notification-item {
+    font-size: 11px;
+    padding: 6px 10px;
   }
 }
 
@@ -1479,6 +1572,10 @@ header {
   .categories-bar {
     justify-content: flex-start;
   }
+  
+  .notifications-sidebar {
+    display: none;
+  }
 }
 
 @media (max-width: 360px) {
@@ -1527,6 +1624,49 @@ header {
   
   .categories-bar {
     justify-content: flex-start;
+  }
+  
+  .notifications-sidebar {
+    display: none;
+  }
+}
+
+/* تحسينات خاصة لمتصفح سفاري */
+@supports (-webkit-touch-callout: none) {
+  body {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  
+  .category-btn, .header-buttons button, .add-to-cart-btn {
+    -webkit-touch-callout: none;
+  }
+}
+
+/* تحسينات للشاشات الصغيرة جدا */
+@media (max-width: 320px) {
+  .header-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .header-buttons button {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .categories-bar {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .category-btn {
+    width: 100%;
   }
 }
 </style>
@@ -1751,18 +1891,6 @@ const PASSWORDS = {
 
 // إضافة متغير جديد لتخزين الفواتير المحفوظة
 let savedInvoices = JSON.parse(localStorage.getItem('savedInvoices')) || [];
-
-// بيانات تجريبية للمنتجات (في حالة فشل جلب البيانات)
-const sampleProducts = [
-  { name: "شاحن سامسونج اصلي 25 وات", price: "120", image: "https://via.placeholder.com/200?text=شاحن+سامسونج" },
-  { name: "كابل شحن نوع C 2 متر", price: "40", image: "https://via.placeholder.com/200?text=كابل+شحن" },
-  { name: "جراب ايفون 14 برو ماكس", price: "60", image: "https://via.placeholder.com/200?text=جراب+ايفون" },
-  { name: "اسكرين حماية زجاجي للايفون", price: "35", image: "https://via.placeholder.com/200?text=اسكرين+حماية" },
-  { name: "سماعات ايربودز لاسلكية", price: "180", image: "https://via.placeholder.com/200?text=سماعات+لاسلكية" },
-  { name: "باور بانك 10000 مللي امبير", price: "250", image: "https://via.placeholder.com/200?text=باور+بانك" },
-  { name: "صب شحن سريع 20 وات", price: "90", image: "https://via.placeholder.com/200?text=صب+شحن" },
-  { name: "كابل بيانات USB نوع C", price: "25", image: "https://via.placeholder.com/200?text=كابل+بيانات" }
-];
 
 // دالة لتحويل الأرقام العربية إلى إنجليزية
 function convertArabicToEnglishNumbers(str) {
@@ -2377,64 +2505,38 @@ async function fetchProducts() {
     } catch (fetchError) {
       console.log('محاولة الطلب المباشر فشلت:', fetchError);
       
-      // استخدام البيانات التجريبية في حالة فشل جلب البيانات
-      console.log('استخدام البيانات التجريبية...');
-      productsData = sampleProducts;
-      
-      localStorage.setItem("products", JSON.stringify(productsData));
-      localStorage.setItem("products_cache_time", now.toString());
-      
-      document.getElementById('loadingStatus').textContent = 'جاري عرض المنتجات...';
-      document.getElementById('loadingProgressBar').style.width = '100%';
-      
-      // عرض الأقسام مباشرة بعد تحميل البيانات
-      renderCategories();
-      showCategoriesView();
-      
-      checkNewProducts();
-      updateCategoryCounts();
-      
-      setTimeout(() => {
-        document.getElementById('products-container').innerHTML = '';
-      }, 500);
+      // استخدام البيانات المخزنة في حالة فشل جلب البيانات
+      const cachedProducts = localStorage.getItem("products");
+      if (cachedProducts) {
+        try {
+          productsData = JSON.parse(cachedProducts);
+          document.getElementById('loadingProgressBar').style.width = '100%';
+          document.getElementById('loadingStatus').textContent = 'تم التحميل من الذاكرة المؤقتة';
+          
+          // عرض الأقسام مباشرة بعد تحميل البيانات
+          renderCategories();
+          showCategoriesView();
+          
+          updateCategoryCounts();
+          
+          setTimeout(() => {
+            document.getElementById('products-container').innerHTML = '';
+          }, 500);
+          
+          showToast('تم تحميل البيانات من الذاكرة المؤقتة');
+        } catch (e) {
+          console.error("❌ خطأ في تحميل البيانات المخزنة:", e);
+          showErrorMessage();
+        }
+      } else {
+        // لا توجد بيانات مخزنة، عرض رسالة خطأ
+        showErrorMessage();
+      }
     }
     
   } catch (error) {
     console.error("❌ خطأ في جلب المنتجات:", error);
-    document.getElementById('loadingStatus').textContent = 'حدث خطأ في تحميل البيانات';
-    
-    const cachedProducts = localStorage.getItem("products");
-    if (cachedProducts) {
-      try {
-        productsData = JSON.parse(cachedProducts);
-        document.getElementById('loadingProgressBar').style.width = '100%';
-        document.getElementById('loadingStatus').textContent = 'تم التحميل من الذاكرة المؤقتة';
-        
-        // عرض الأقسام مباشرة بعد تحميل البيانات
-        renderCategories();
-        showCategoriesView();
-        
-        updateCategoryCounts();
-        
-        setTimeout(() => {
-          document.getElementById('products-container').innerHTML = '';
-        }, 500);
-        
-      } catch (e) {
-        console.error("❌ خطأ في تحميل البيانات المخزنة:", e);
-        showErrorMessage();
-      }
-    } else {
-      // استخدام البيانات التجريبية كحل أخير
-      productsData = sampleProducts;
-      
-      // عرض الأقسام مباشرة بعد تحميل البيانات
-      renderCategories();
-      showCategoriesView();
-      
-      document.getElementById('loadingProgressBar').style.width = '100%';
-      document.getElementById('loadingStatus').textContent = 'تم التحميل بالبيانات التجريبية';
-    }
+    showErrorMessage();
   }
 }
 
