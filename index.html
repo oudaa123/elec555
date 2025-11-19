@@ -26,6 +26,7 @@
     padding: 20px;
     margin: 0;
     line-height: 1.6;
+    min-height: 100vh;
   }
 
   .container {
@@ -35,6 +36,9 @@
     border-radius: 15px;
     padding: 25px;
     box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 40px);
   }
 
   h2 {
@@ -191,6 +195,8 @@
     box-shadow: var(--shadow);
     max-height: 600px;
     overflow-y: auto;
+    flex: 1;
+    margin-bottom: 20px;
   }
 
   #results {
@@ -340,8 +346,13 @@
   }
 
   @media (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+    
     .container {
       padding: 15px;
+      min-height: calc(100vh - 20px);
     }
     
     h2 {
@@ -378,6 +389,16 @@
     
     .password-content {
       padding: 20px;
+    }
+    
+    .search-title, .selected-model-title {
+      font-size: 22px;
+      margin: 15px 0;
+      padding: 12px;
+    }
+    
+    .results-container {
+      max-height: none;
     }
   }
 </style>
@@ -534,6 +555,11 @@ function selectModel(model, button) {
   
   // إخفاء عداد النتائج
   resultsCount.style.display = "none";
+  
+  // تمرير الصفحة لأسفل لعرض النتائج
+  setTimeout(() => {
+    resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
 }
 
 // بدء البحث النصي
@@ -587,6 +613,9 @@ function backToModelsList() {
   
   // مسح مربع البحث
   search.value = "";
+  
+  // تمرير الصفحة للأعلى
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // عرض رسالة ترحيب
@@ -697,6 +726,11 @@ function displayResultsForSearch(value) {
       passwordInput.focus();
     });
   });
+  
+  // تمرير الصفحة لأسفل لعرض النتائج
+  setTimeout(() => {
+    resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
 }
 
 // البحث أثناء الكتابة مع تأخير
